@@ -33,6 +33,20 @@
         console.log(p2);
         p1.speak();
         p2.speak();
+
+
+        class Car{
+            constructor(name,price){
+                this.name = name
+                this.price = price
+            }
+            //类中可以直接写赋值语句，如下代码的含义是给Car的实例对象添加一个属性名，为a，值为1
+            a = 1
+        }
+        const c1 = new Car("audi",99)
+        const c2 = new Car("benz",199)
+        console.log(c1)
+        console.log(c2)
     </script>
 </body>
 </html>
