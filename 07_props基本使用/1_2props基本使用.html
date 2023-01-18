@@ -34,5 +34,7 @@ class Person extends React.Component{
 const p = {name:"lily",age:"20",sex:"女"}
 //ReactDOM.render(<Person name={p.name} age={p.age} sex={p.sex}/>,document.getElementById("test"))
 ReactDOM.render(<Person {...p}/>,document.getElementById("test"))
+
+//关于...p之所以能展开对象，是因为react加babel允许这样写，原生js不可以这样写，原生js{...p}的花括号和react{...p}的花括号不是一个意思
 </script>
 

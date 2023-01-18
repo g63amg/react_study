@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2_对props进行限制</title>
+    <!-- react 核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- react-dom 用于支持react操作dom -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- babel 用于将jsx转成js -->
+    <script src="../js/babel.min.js"></script>
+    <!-- 引入prop-types，用于对组件标签属性进行限制 -->
+    <script src="../js/prop-types.js"></script>
+</head>
+<body>
+    <div id="test"></div>
+    <div id="test1"></div>
+    <div id="test2"></div>
+</body>
+</html>
+<script type="text/babel">
+//创建组件
+class Person extends React.Component{
+    render(){
+        const {name,age,sex} = this.props
+
+        //this.props.name = "jason"  此行代码会报错，因为props是只读的
+        return (
+            <ul>
+                <li>姓名：{name}</li>
+                <li>性别：{sex}</li>
+                <li>年龄：{age}</li>
+            </ul>
+        )
+    }
+}
+
+// Person.属性规则{
+//     name:"必须传，字符串"
+// }
+//propTypes属性规则，在里边写上规则，react就能帮我限制了
+Person.propTypes = {
+    //react身上有一个内置的对象叫PropTypes，propTypes和PropTypes两个不是一回事，在react15.xxx版本的时候，可以用PropTypes，往后的版本要用PropTypes需要引入prop-types.js, isRequired的意思是必须传的值
+    name:PropTypes.string.isRequired,//限制name必传，且为字符串
+    sex:PropTypes.string,//限制sex为字符串
+    age:PropTypes.number,//限制age为数值
+    speak:PropTypes.func,//限制speak为函数
+
+}
+
+//指定默认标签属性值
+Person.defaultProps = {
+    sex:"男",
+    age:66
+}
+
+function speak(){
+    console.log("我是函数")
+}
+ReactDOM.render(<Person name="jasmine" age={20} sex="girl" speak={speak}/>,document.getElementById("test"))
+ReactDOM.render(<Person name="alice" age={22} sex="girl"/>,document.getElementById("test1"))
+
+const p = {name:"lucy",age:26,sex:"女"}
+ReactDOM.render(<Person name={p.name} age={p.age} sex={p.sex}/>,document.getElementById("test2"))
+// ReactDOM.render(<Person {...p}/>,document.getElementById("test"))
+
+
+</script>
+

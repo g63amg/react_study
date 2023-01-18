@@ -18,6 +18,7 @@
     console.log(...arr1) //展开一个数组
 
     let arr3 = [...arr1,...arr2] //连接数组
+    console.log(arr3)
     console.log(...arr3)
 
 
@@ -32,4 +33,14 @@
         })
     }
     console.log(sum(1,2,3))
+
+    //构建字面量对象时使用展开语法
+    let person = {name:"lucy",age:"20"}
+    let person2 = {...person} 
+    console.log(person2) //可以拿到person2
+    //console.log(...person) //报错，三点运算符不能展开对象,如果外边包了一个花括号，像39行，就可以拿到person2是复制了一个perison
+
+    //合并，拿到person3可以更改原来的属性值，还可以新增属性
+    let person3 = {...person,name:"jason",age:"26",address:"TZ"}
+    console.log(person3)
 </script>
