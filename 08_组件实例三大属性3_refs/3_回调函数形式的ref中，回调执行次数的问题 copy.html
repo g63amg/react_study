@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3_回调函数形式的ref中，回调执行次数的问题 copy</title>
+    <!-- react 核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- react-dom 用于支持react操作dom -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- babel 用于将jsx转成js -->
+    <script src="../js/babel.min.js"></script>
+    <!-- 引入prop-types，用于对组件标签属性进行限制 -->
+    <script src="../js/prop-types.js"></script>
+</head>
+<body>
+    <div id="test"></div>
+    <div id="test1"></div>
+    <div id="test2"></div>
+</body>
+</html>
+
+<script type="text/babel">
+class Demo extends React.Component{
+    state = {isHot:true}
+    render(){
+        const {isHot} = this.state
+        return(
+            <div>
+                <h2>今天天气很{isHot?"炎热":"凉爽"}</h2>
+                <input ref={(c)=>{this.input1 = c}} type="text"/>
+                <button onClick={this.showInfo}>点我提示输入数据</button>
+                <button onClick={this.changeWeather}>点我切换天气</button>
+            </div>
+        )
+    }
+    showInfo = ()=>{
+        const{input1} = this
+        alert(input1.value)
+    }
+    changeWeather = ()=>{
+        const {isHot} = this.state
+        this.setState({isHot:!isHot})
+
+    }
+}
+
+ReactDOM.render(<Demo/>,document.getElementById("test"))
+</script>
+
