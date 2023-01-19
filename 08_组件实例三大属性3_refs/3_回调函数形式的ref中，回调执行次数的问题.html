@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3_回调函数形式的ref中，回调执行次数的问题 copy</title>
+    <title>3_回调函数形式的ref中，回调执行次数的问题</title>
     <!-- react 核心库 -->
     <script src="../js/react.development.js"></script>
     <!-- react-dom 用于支持react操作dom -->
@@ -29,7 +29,8 @@ class Demo extends React.Component{
         return(
             <div>
                 <h2>今天天气很{isHot?"炎热":"凉爽"}</h2>
-                <input ref={(c)=>{this.input1 = c}} type="text"/>
+                {/*<input ref={(c)=>{this.input1 = c;console.log('@',c)}} type="text"/>*/}
+                <input ref={this.saveInput} type="text"/>
                 <button onClick={this.showInfo}>点我提示输入数据</button>
                 <button onClick={this.changeWeather}>点我切换天气</button>
             </div>
@@ -44,8 +45,17 @@ class Demo extends React.Component{
         this.setState({isHot:!isHot})
 
     }
+    saveInput = (c)=>{
+        this.input1 = c;
+        console.log('@',c)
+    }
 }
 
 ReactDOM.render(<Demo/>,document.getElementById("test"))
+
+/*
+<input ref={(c)=>{this.input1 = c;console.log('@',c)}} type="text"/>
+ref写成内联的就行
+*/
 </script>
 
