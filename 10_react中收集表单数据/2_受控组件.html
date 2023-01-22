@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2_受控组件</title>
+    <!-- react 核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- react-dom 用于支持react操作dom -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- babel 用于将jsx转成js -->
+    <script src="../js/babel.min.js"></script>
+    <!-- 引入prop-types，用于对组件标签属性进行限制 -->
+    <script src="../js/prop-types.js"></script>
+</head>
+<body>
+    <div id="test"></div>
+</body>
+</html>
+
+<script type="text/babel">
+class Login extends React.Component{
+    state = {
+        username: "",
+        password: ""
+    }
+    render(){
+        return(
+            <form action="baidu.com" onSubmit={this.handleSubmit}>
+                用户名：<input onChange={this.saveUsername} type="text" name="username"/>
+                密码：<input onChange={this.savePassword} type="password" name="password"/>
+                <button>登录</button>
+            </form>
+        )
+    }
+    //表单提交的回调
+    handleSubmit = (event)=>{
+        event.preventDefault() //阻止表单提交
+        const {username,password} = this.state
+        alert(`你输入的用户名是：${username}, 你输入的密码是：${password}`)
+    }
+    //保存用户名到状态中
+    saveUsername = (event)=>{
+        this.setState({username:event.target.value})
+    }
+    //保存密码到状态中
+    savePassword = (event)=>{
+        this.setState({password:event.target.value})
+    }
+}
+
+ReactDOM.render(<Login/>,document.getElementById("test"))
+
+/*页面中所有输入类的dom，比如input，这种dom随着你的输入，值就可以维护到状态里去，等需要用的时候直接从状态里边取出来，就是受控组件*/
+</script>
+

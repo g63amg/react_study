@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1_引出生命周期</title>
+    <!-- react 核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- react-dom 用于支持react操作dom -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- babel 用于将jsx转成js -->
+    <script src="../js/babel.min.js"></script>
+    <!-- 引入prop-types，用于对组件标签属性进行限制 -->
+    <script src="../js/prop-types.js"></script>
+</head>
+<body>
+    <div id="test"></div>
+</body>
+</html>
+
+<script type="text/babel">
+class Life extends React.Component{
+    state = {opacity:1}
+    //componentDidMount只调用一次，组件挂载完毕时调用一次
+    componentDidMount(){
+        this.timer = setInterval(()=>{
+            let {opacity} = this.state
+            opacity -= 0.1
+            if(opacity <= 0){
+                opacity = 1
+            }
+            this.setState({opacity:opacity})
+            
+        },200)
+    }
+    //组件将要被卸载的时候调用
+    ComponentWillUnmount(){
+        clearInterval(this.timer)
+    }
+    //什么时候调用render：初始化渲染，状态更新之后
+    render(){
+        console.log("render")
+        return (
+            <div>
+                <h1 style={{opacity:this.state.opacity}}>React学不会怎么办？</h1>    
+                <button onClick={this.death}>不行</button>
+            </div>
+        )
+    }
+    death = ()=>{
+        ReactDOM.unmountComponentAtNode(document.getElementById("test"))
+    }
+}
+ReactDOM.render(<Life/>,document.getElementById("test"))
+
+//生命周期回调函数<=>生命周期钩子函数<=>生命周期函数<=>生命周期钩子
+/*
+1.组件从创建到死亡它会经历一些特定的阶段
+2.React组件中包含一系列钩子函数（生命周期回调函数），会在特定的时刻调用
+3.我们在定义组件时，会在特定的生命周期回调函数中做特定的工作
+*/
+</script>
+
