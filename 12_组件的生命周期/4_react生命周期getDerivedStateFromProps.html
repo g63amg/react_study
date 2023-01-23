@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2_react生命周期（旧）</title>
+    <title>4_react生命周期getDerivedStateFromProps</title>
     <!-- react 核心库 -->
     <script src="../js/react.development.js"></script>
     <!-- react-dom 用于支持react操作dom -->
@@ -52,14 +52,15 @@ class Count extends React.Component{
     force = ()=>{
         this.forceUpdate()
     }
+
+    static getDerivedStateFromProps(props){
+        console.log("getDerivedStateFromProps",props)
+        return props
+        //此方法适用于罕见的用例，即state的值在任何时候都取决于props，派生状态会导致代码冗余，并使组件难以维护
+    }
     //组件挂载完毕时调用一次
     componentDidMount(){
         console.log("componentDidMount")
-    }
-
-    //组件将要挂载的钩子
-    componentWillMount(){
-        console.log("componentWillMount")
     }
 
     //组件将要被卸载的钩子，卸载的时候调用
@@ -73,67 +74,20 @@ class Count extends React.Component{
         return true
     }
 
-    //组件将要更新的时候调用
-    componentWillUpdate(){
-        console.log("componentWillUpdate")
-    }
-
     //组件更新完毕的钩子
     componentDidUpdate(){
         console.log("componentDidUpdate")
     }
 }
 
-class A extends React.Component{
-    state = {carName:"benz"}
-    render(){
-        return(
-            <div>
-                <div>A组件</div>
-                <button onClick={this.changeCar}>换车</button>
-                <B carName={this.state.carName}/>
-            </div>
-        )
-    }
-    changeCar = ()=>{
-        this.setState({carName:"奥拓"})
-    }
-}
-class B extends React.Component{
-    render(){
-        console.log("render")
-        return(
-            <div>B组件，接收的车是：{this.props.carName}</div>
-        )
-    }
-    //组件将要接收新的props的钩子
-    componentWillReceiveProps(){
-        console.log("componentWillReceiveProps")
-    }
-    //控制组件更新的阀门，这个钩子不写底层默认给你补上一个，默认返回值是true
-    shouldComponentUpdate(){
-        console.log("shouldComponentUpdate")
-        return true
-    }
-
-    //组件将要更新的时候调用
-    componentWillUpdate(){
-        console.log("componentWillUpdate")
-    }
-
-    //组件更新完毕的钩子
-    componentDidUpdate(){
-        console.log("componentDidUpdate")
-    }
-}
-ReactDOM.render(<A/>,document.getElementById("test"))
+ReactDOM.render(<Count/>,document.getElementById("test"))
 
 
 /*
 生命周期的三个阶段
 1.初始化阶段：由ReactDOM.render()触发---初次渲染
     1.constructor()
-    2.componentWillMount()  //组件将要挂载的钩子
+    2.componentWillMount() //组件将要挂载的钩子
     3.render()==>必须使用
     4.componentDidMount()==>常用，组件挂载完毕时调用一次，一般在这个钩子中做一些初始化的事，例如：开启定时器，发送网络请求、订阅消息
 
@@ -145,6 +99,13 @@ ReactDOM.render(<A/>,document.getElementById("test"))
 
 3.卸载组件：由ReactDOM.unmountComponentAtNode()触发
     1.componentWillUnmount()==>常用，一般在这个钩子中做一些收尾的事，例如：关定时器，取消订阅消息
+
+
+
+UNSAFE_componentWillMount
+UNSAFE_componentWillUpdate
+UNSAFE_componentWillReceiveProps
+这三个钩子使用要加UNSAFE_
 */
 </script>
 
